@@ -1,0 +1,30 @@
+resource "aws_vpc" "customvpc" {
+  cidr_block = "10.0.0.0/16"
+  tags = {
+    Name = "Custom vpc"
+  }
+}
+
+resource "aws_internet_gateway" "custominternetgateway" {
+  vpc_id = aws_vpc.customvpc.id
+}
+
+resource "aws_subnet" "websubnet" {
+  cidr_block        = "10.0.0.0/20"
+  vpc_id            = aws_vpc.customvpc.id
+  availability_zone = "ap-south-1a"
+}
+
+resource "aws_subnet" "appsubnet" {
+  cidr_block        = "10.0.16.0/20"
+  vpc_id            = aws_vpc.customvpc.id
+  availability_zone = "ap-south-1b"
+
+}
+
+
+resource "aws_subnet" "dbsubnet" {
+  cidr_block        = "10.0.32.0/20"
+  vpc_id            = aws_vpc.customvpc.id
+  availability_zone = "ap-south-1a"
+}
